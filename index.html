@@ -1,0 +1,199 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mazda preview</title>
+  <link rel="stylesheet" href="https://cdn.pannellum.org/2.3/pannellum.css" />
+  <script type="text/javascript" src="https://cdn.pannellum.org/2.3/pannellum.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <style>
+    html {
+      background: black;
+    }
+
+    #panorama {
+      width: 1366px;
+      height: 100vh;
+      margin: 0 auto;
+    }
+
+    #controls {
+      position: absolute;
+      bottom: 0;
+      z-index: 2;
+      text-align: center;
+      width: 100%;
+      padding-bottom: 3px;
+    }
+
+    .ctrl {
+      padding: 8px 5px;
+      width: 30px;
+      text-align: center;
+      background: rgba(200, 200, 200, 0.8);
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .ctrl:hover {
+      background: rgba(200, 200, 200, 1);
+    }
+
+    .pnlm-controls-container {
+      display: none;
+    }
+
+    .custom-hotspot, .custom-hotspot-1, .custom-hotspot-2, .custom-hotspot-3, .custom-hotspot-4 {
+        height: 20px;
+        width: 20px;
+        background: #69181c;
+        border: 3px solid white;
+        border-radius: 50%;
+        position: inherit;
+        z-index: 9999;
+    }
+    
+    video {
+      border: 3px solid #69181c;
+      position: relative;
+      z-index: 99999;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="panorama">
+    <div id="controls">
+      <div class="ctrl" id="pan-up">▲</div>
+      <div class="ctrl" id="pan-down">▼</div>
+      <div class="ctrl" id="pan-left">◀</div>
+      <div class="ctrl" id="pan-right">▶</div>
+      <div class="ctrl" id="zoom-in">+</div>
+      <div class="ctrl" id="zoom-out">−</div>
+      <div class="ctrl" id="fullscreen">⤢</div>
+    </div>
+  </div>
+
+  <script>
+  $(document).ready(function() {
+    var viewer = pannellum.viewer('panorama', {
+      "type": "multires",
+      "autoLoad": true,
+      "multiRes": {
+        "basePath": "output",
+        "path": "/%l/%s%y_%x",
+        "fallbackPath": "/fallback/%s",
+        "extension": "png",
+        "tileResolution": 512,
+        "maxLevel": 5,
+        "cubeResolution": 5208
+      },
+      "orientationOnByDefault": false,
+      "showControls": false,
+      "hotSpots": [
+        {
+          "pitch": -1.9,
+          "yaw": 144.4,
+          "type": "info",
+          "cssClass": "custom-hotspot-1",
+        },
+        {
+          "pitch": -19,
+          "yaw": 2,
+          "type": "info",
+          "cssClass": "custom-hotspot-2",
+        },
+        {
+          "pitch": -5,
+          "yaw": 20,
+          "type": "info",
+          "cssClass": "custom-hotspot-3",
+        },
+        {
+          "pitch": 3,
+          "yaw": -50,
+          "type": "info",
+          "cssClass": "custom-hotspot-4",
+        }
+      ]
+    });
+    document.querySelectorAll('.pnlm-load-button')[0].innerHTML = '<p>START</p>';
+
+    document.getElementById('pan-up').addEventListener('click', function (e) {
+      viewer.setPitch(viewer.getPitch() + 50);
+    });
+    document.getElementById('pan-down').addEventListener('click', function (e) {
+      viewer.setPitch(viewer.getPitch() - 50);
+    });
+    document.getElementById('pan-left').addEventListener('click', function (e) {
+      viewer.setYaw(viewer.getYaw() - 50);
+    });
+    document.getElementById('pan-right').addEventListener('click', function (e) {
+      viewer.setYaw(viewer.getYaw() + 50);
+    });
+    document.getElementById('zoom-in').addEventListener('click', function (e) {
+      viewer.setHfov(viewer.getHfov() - 50);
+    });
+    document.getElementById('zoom-out').addEventListener('click', function (e) {
+      viewer.setHfov(viewer.getHfov() + 50);
+    });
+    document.getElementById('fullscreen').addEventListener('click', function (e) {
+      viewer.toggleFullscreen();
+    });
+
+    setTimeout(function() {
+      $('.custom-hotspot-1').click(function(e) {
+          e.preventDefault();
+          if ($('.player').length) {
+              $('.player').remove();
+          }
+          else {
+              var content = '<video class="player" id="my_video-1" width="500" loop autoplay><source src="https://idn.tweddle.com/media/mazda/6936b_25_2015_CX5_UK_childseats_v2.mp4" type="video/mp4"/></video>';
+              $(this).append(content);
+          }
+      });
+      $('.custom-hotspot-2').click(function(e) {
+          e.preventDefault();
+          if ($('.player').length) {
+              $('.player').remove();
+          }
+          else {
+              var content = '<video class="player" id="my_video-2" width="500" loop autoplay><source src="https://idn.tweddle.com/media/mazda/a395e_26_2015_CX5_UK_dualzoneclimatecontrolairconditioning_v2.mp4" type="video/mp4"/></video>';
+              $(this).append(content);
+
+          }
+      });
+      $('.custom-hotspot-3').click(function(e) {
+          e.preventDefault();
+          if ($('.player').length) {
+              $('.player').remove();
+          }
+          else {
+              var content = '<video class="player" id="my_video-3" width="500" loop autoplay><source src="https://idn.tweddle.com/media/mazda/f0abb_21_2015_CX5_UK_instrumentpanel_v2.mp4" type="video/mp4"/></video>';
+              $(this).append(content);
+
+          }
+      });
+      $('.custom-hotspot-4').click(function(e) {
+          e.preventDefault();
+          if ($('.player').length) {
+              $('.player').remove();
+          }
+          else {
+              var content = '<video class="player" id="my_video-4" width="500" loop autoplay><source src="https://idn.tweddle.com/media/mazda/8bd71_27_2015_CX5_UK_mirrors_v2.mp4" type="video/mp4"/></video>';
+              $(this).append(content);
+
+          }
+      });
+    }, 1000)
+
+  })
+
+  </script>
+
+</body>
+
+</html>
